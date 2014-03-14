@@ -15,5 +15,5 @@ type in a URL in browser :
 		http://localhost:3002/crossdomain.html
 
 
-[the blog]() about the demo 
+[the blog](http://kunkun12.com/blog/2014/03/14/cross-domain/) about the demo 
 
