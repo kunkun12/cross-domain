@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>跨域解决防范JSONP与CORS</title>
+	<link href="http://cdn.bootcss.com/bootstrap/3.1.1/css/bootstrap.css" rel="stylesheet">
+	<script type="text/javascript">
+
+	 var   $=function(id){
+				return document.getElementById(id);
+		   }
+		window.onload=function(){
+			$("jsonpbt").addEventListener('click',function  () {
+				var a=$('a').value;
+				var b=$('b').value;
+			    var querystring="a="+a+"&b="+b;
+				var script=document.createElement('script');
+				script.async=true;
+				script.src="http://localhost:3000/add?callback=addresult&"+querystring;
+				document.body.appendChild(script);
+			})
+		//CORS
+		$("corsbt").addEventListener('click',function  () {
+				var a=$('a').value;
+				var b=$('b').value;
+			    var querystring="c="+a+"&d="+b;
+				var xhr = new XMLHttpRequest();
+				xhr.open("get", "http://localhost:3000/multiply?"+querystring, true);
+				xhr.withCredentials = true;//放在 open 方法后面比较靠谱
+				xhr.onload =function(){
+					 var data = xhr.responseText;
+					$("result").innerHTML="这两个数的乘积为"+data;
+				}
+				xhr.send();　　
+		})
+
+	}
+function addresult (a) {
+	// body... 
+	$("result").innerHTML="这两个数的合为"+a;
+}
+	</script>
+</head>
+<body>
+<input type="text" id='a'placeholder="输入A的值">
+<input type="text" id='b'placeholder="输入B的值">
+	<button id="jsonpbt" type="button" class="btn btn-primary" >执行JSONP</button>
+	<button id="corsbt" type="button" class="btn btn-primary" >cors</button>
+	<div id='result' class="alert alert-success">...</div>
+</body>
+</html>
